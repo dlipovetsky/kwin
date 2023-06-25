@@ -317,6 +317,17 @@ void TabBoxHandlerPrivate::show()
         m_qmlComponent.reset(new QQmlComponent(Scripting::self()->qmlEngine()));
     }
     const bool desktopMode = (config.tabBoxMode() == TabBoxConfig::DesktopTabBox);
+    QAbstractItemModel *model = nullptr;
+    if (desktopMode) {
+        model = desktopModel();
+    } else {
+        model = clientModel();
+    }
+    // If there are fewer than two windows, switching windows has no meaning, so do not show the tabbox.
+    if (model->rowCount() <= 1) {
+        return;
+    }
+
     auto findMainItem = [this](const QMap<QString, QObject *> &tabBoxes) -> QObject * {
         auto it = tabBoxes.constFind(config.layoutName());
         if (it != tabBoxes.constEnd()) {
@@ -337,12 +348,6 @@ void TabBoxHandlerPrivate::show()
         // need to save the current index row (https://bugs.kde.org/show_bug.cgi?id=333511).
         int indexRow = index.row();
         if (!item->model()) {
-            QAbstractItemModel *model = nullptr;
-            if (desktopMode) {
-                model = desktopModel();
-            } else {
-                model = clientModel();
-            }
             item->setModel(model);
         }
         item->setAllDesktops(config.clientDesktopMode() == TabBoxConfig::AllDesktopsClients);
