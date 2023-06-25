@@ -245,7 +245,7 @@ void ClientModel::createClientList(int desktop, bool partialReset)
         m_mutableClientList.prepend(c);
     }
     if (tabBox->config().clientApplicationsMode() != TabBoxConfig::AllWindowsCurrentApplication
-        && (tabBox->config().showDesktopMode() == TabBoxConfig::ShowDesktopClient || m_mutableClientList.isEmpty())) {
+        && tabBox->config().showDesktopMode() == TabBoxConfig::ShowDesktopClient) {
         QWeakPointer<TabBoxClient> desktopClient = tabBox->desktopClient();
         if (!desktopClient.isNull()) {
             m_mutableClientList.append(desktopClient);
