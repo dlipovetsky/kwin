@@ -1206,14 +1206,20 @@ bool TabBox::startWalkThroughDesktopList()
 
 void TabBox::KDEWalkThroughWindows(bool forward)
 {
-    nextPrev(forward);
-    delayedShow();
+    const TabBoxClientList list = m_tabBox->clientList();
+    if (list.size() >= 1) {
+        nextPrev(forward);
+        delayedShow();
+    }
 }
 
 void TabBox::walkThroughDesktops(bool forward)
 {
-    nextPrev(forward);
-    delayedShow();
+    const TabBoxClientList list = m_tabBox->clientList();
+    if (list.size() >= 1) {
+        nextPrev(forward);
+        delayedShow();
+    }
 }
 
 void TabBox::CDEWalkThroughWindows(bool forward)
