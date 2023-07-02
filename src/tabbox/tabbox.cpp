@@ -1276,6 +1276,8 @@ void TabBox::KDEOneStepThroughWindows(bool forward, TabBoxMode mode)
     if (Window *c = currentClient()) {
         Workspace::self()->activateWindow(c);
         shadeActivate(c);
+        // Move mouse pointer to center of window
+        input()->warpPointer(c->clientGeometry().center());
     }
 }
 
@@ -1445,6 +1447,8 @@ void TabBox::accept(bool closeTabBox)
         if (c->isDesktop()) {
             Workspace::self()->setShowingDesktop(!Workspace::self()->showingDesktop(), !m_desktopListConfig.isHighlightWindows());
         }
+        // Move mouse pointer to center of window
+        input()->warpPointer(c->clientGeometry().center());
     }
 }
 

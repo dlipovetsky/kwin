@@ -31,6 +31,7 @@
 
 #include "atoms.h"
 #include "group.h"
+#include "input.h"
 #include "rules.h"
 #include "useractions.h"
 #include <QDebug>
@@ -533,6 +534,8 @@ void Workspace::switchToOutput(Output *output)
     }
     if (get_focus != nullptr && get_focus != mostRecentlyActivatedWindow()) {
         requestFocus(get_focus);
+        // Move mouse pointer to center of window
+        input()->warpPointer(get_focus->clientGeometry().center());
     }
     setActiveOutput(output);
 }

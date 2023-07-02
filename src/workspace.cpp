@@ -1523,6 +1523,8 @@ void Workspace::sendWindowToDesktop(Window *window, int desk, bool dont_activate
 void Workspace::sendWindowToOutput(Window *window, Output *output)
 {
     window->sendToOutput(output);
+    // Move mouse pointer to center of window
+    input()->warpPointer(window->clientGeometry().center());
 }
 
 /**
